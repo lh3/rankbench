@@ -172,9 +172,6 @@ b2b_t *b2b_restore(const char *fn)
 	return b;
 }
 
-#define LIKELY(x) __builtin_expect((x),1)
-#define UNLIKELY(x) __builtin_expect((x),0)
-
 int b2b_rank1a(const b2b_t *b, int64_t k, int64_t *ok)
 {
 	int c;
@@ -193,7 +190,6 @@ int b2b_rank1a(const b2b_t *b, int64_t k, int64_t *ok)
 		n += ok[c];
 	}
 	assert(n <= k);
-#if 1
 	while (n < k) {
 		int l = *q >> b->x.abit, c = *q & b->x.amask;
 		if (n + l > k) {
@@ -202,19 +198,5 @@ int b2b_rank1a(const b2b_t *b, int64_t k, int64_t *ok)
 		}
 		++q, ok[c] += l, n += l;
 	}
-#else
-	{
-		const uint16_t *q0 = q, *q1;
-		while (n < k) {
-			int l = *q >> b->x.abit;
-			if (n + l > k) break;
-			++q, n += l;
-		}
-		q1 = q;
-		for (q = q0; q < q1; ++q)
-			ok[*q & b->x.amask] += *q >> b->x.abit;
-		ok[*q & b->x.amask] += k - n;
-	}
-#endif
 	return *q & b->x.amask;
 }

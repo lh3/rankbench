@@ -49,11 +49,13 @@ int main(int argc, char *argv[])
 
 	t = rb3_cputime();
 	for (i = 0, x = 11, checksum = 0; i < n; ++i) {
-		uint64_t k = splitmix64(&x) % tot;
-		if (e) rld_rank1a(e, k, (uint64_t*)ok);
-		if (r) mr_rank1a(r, k, ok);
-		if (b) b2b_rank1a(b, k, ok);
-		checksum ^= ok[2];
+		uint64_t k = splitmix64(&x) % tot, z;
+		int c;
+		if (e) c = rld_rank1a(e, k, (uint64_t*)ok);
+		if (r) c = mr_rank1a(r, k, ok);
+		if (b) c = b2b_rank1a(b, k, ok);
+		z = x + c + ok[1] + ok[2];
+		checksum += splitmix64(&z);
 	}
 	t = rb3_cputime() - t;
 	printf("checksum: %lx\n", (unsigned long)checksum);

@@ -117,8 +117,8 @@ void b2b_index(b2b_t *b)
 
 void b2b_enc_finish(b2b_t *b, b2b_itr_t *itr)
 {
-	b->n_b = itr->n_b;
 	b2b_enc(b, itr, -1, 0);
+	b->n_b = itr->n_b;
 	b2b_index(b);
 }
 

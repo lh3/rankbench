@@ -168,6 +168,7 @@ b2b_t *b2b_restore(const char *fn)
 	if (b == 0) return 0;
 	b2b_alloc_blocks(b, b->n_b);
 	fread(b->b, 2, b->n_b, fp);
+	b->c = B2B_CALLOC(uint64_t, b->x.n_c);
 	fread(b->c, 8, b->x.n_c, fp);
 	return b;
 }

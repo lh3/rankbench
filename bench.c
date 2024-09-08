@@ -45,8 +45,9 @@ int main(int argc, char *argv[])
 		if (b) b2b_rank1a(b, k, (int64_t*)ok);
 		checksum ^= ok[2];
 	}
+	t = rb3_cputime() - t;
 	printf("checksum: %lx\n", (unsigned long)checksum);
-	printf("time: %f\n", rb3_cputime() - t);
+	printf("time: %f\n", t);
 
 	if (e) rld_destroy(e);
 	if (b) b2b_destroy(b);

@@ -2,7 +2,7 @@ CC=			gcc
 CFLAGS=		-g -Wall -Wc++-compat -O3
 CPPFLAGS=
 INCLUDES=
-OBJS=		rld0.o b2b.o
+OBJS=		rld0.o b2b.o rle.o rope.o mrope.o
 PROG=		fmd2b2b rankbench
 LIBS=		-lpthread -lz -lm
 
@@ -34,6 +34,9 @@ depend:
 # DO NOT DELETE
 
 b2b.o: b2b.h
-bench.o: rld0.h b2b.h
+bench.o: mrope.h rope.h rld0.h b2b.h
 fmd2b2b.o: rld0.h b2b.h
+mrope.o: mrope.h rope.h rle.h
 rld0.o: rld0.h
+rle.o: rle.h
+rope.o: rle.h rope.h

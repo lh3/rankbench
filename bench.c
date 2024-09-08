@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <sys/resource.h>
 #include <sys/time.h>
+#include "mrope.h"
 #include "rld0.h"
 #include "b2b.h"
 
@@ -21,28 +22,37 @@ uint64_t splitmix64(uint64_t *x)
 
 int main(int argc, char *argv[])
 {
-	uint64_t x, tot, checksum, ok[RLD_MAX_ASIZE];
+	uint64_t x, tot, checksum;
+	int64_t ok[RLD_MAX_ASIZE];
 	int32_t n = 10000000, i;
 	double t;
 	rld_t *e = 0;
 	b2b_t *b = 0;
+	mrope_t *r = 0;
 
 	if (argc == 1) {
 		fprintf(stderr, "Usage: rankbench <in.fmd>|<in.b2b>\n");
 		return 1;
 	}
 	e = rld_restore(argv[1]);
-	if (e == 0) b = b2b_restore(argv[1]);
-	assert(e || b);
+	if (e == 0) r = mr_restore_file(argv[1]);
+	if (e == 0 && r == 0) b = b2b_restore(argv[1]);
+	assert(e || r || b);
 
 	if (e) tot = e->cnt[e->asize];
+	if (r) {
+		int64_t acc[7];
+		mr_get_ac(r, acc);
+		tot = acc[6];
+	}
 	if (b) tot = b->acc[b->asize];
 
 	t = rb3_cputime();
 	for (i = 0, x = 11, checksum = 0; i < n; ++i) {
 		uint64_t k = splitmix64(&x) % tot;
-		if (e) rld_rank1a(e, k, ok);
-		if (b) b2b_rank1a(b, k, (int64_t*)ok);
+		if (e) rld_rank1a(e, k, (uint64_t*)ok);
+		if (r) mr_rank1a(r, k, ok);
+		if (b) b2b_rank1a(b, k, ok);
 		checksum ^= ok[2];
 	}
 	t = rb3_cputime() - t;
@@ -50,6 +60,7 @@ int main(int argc, char *argv[])
 	printf("time: %f\n", t);
 
 	if (e) rld_destroy(e);
+	if (r) mr_destroy(r);
 	if (b) b2b_destroy(b);
 	return 0;
 }

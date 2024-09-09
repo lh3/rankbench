@@ -1,10 +1,13 @@
-This repo evaluates three BWT encoding I implemented:
+Given a string $`B`$, the rank operation is defined by $`{\rm rank}(c,k)=|\{i<k:B[i]=c\}|`$.
+It is essential for string matching.
+This repo evaluates three BWT encodings I implemented, in attempt to find a good encoding for [ropebwt3][rb3].
+It is **not** developed for end users.
+The evaluated encodings:
 
-* FMD: the format I used in [fermi][fermi], developed in 2012
-* FMR: the format I used in [ropebwt2][ropebwt2], developed in 2014
-* B2B: a format inspired by the two-byte encoding used by [blockRLBWT][blockRLBWT].
-  It is developed recently. I might have overlooked important details in the original
-  implementation, though.
+* FMD: the [fermi][fermi] encoding, developed in 2012
+* FMR: the [ropebwt2][ropebwt2] encoding, developed in 2014
+* B2B: a new encoding inspired by the two-byte encoding from [block_RLBWT][blockRLBWT].
+  I might have overlooked important details in the original implementation, though.
 
 Timing on calculating 10 million ranks:
 
@@ -27,3 +30,4 @@ trie/DAWG traversal.
 [fermi]: https://github.com/lh3/fermi
 [ropebwt2]: https://github.com/lh3/ropebwt2
 [blockRLBWT]: https://github.com/saskeli/block_RLBWT
+[rb3]: https://github.com/lh3/ropebwt3

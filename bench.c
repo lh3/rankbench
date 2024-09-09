@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 	t = rb3_cputime();
 	for (i = 0, x = 11, checksum = 0; i < n; ++i) {
 		uint64_t k = splitmix64(&x) % tot, z;
-		int c;
+		int c = 0;
 		if (e) c = rld_rank1a(e, k, (uint64_t*)ok);
 		if (r) c = mr_rank1a(r, k, ok);
 		if (b) c = b2b_rank1a(b, k, ok);

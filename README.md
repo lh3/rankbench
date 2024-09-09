@@ -9,7 +9,7 @@ The evaluated encodings:
 * B2B: a new encoding inspired by the two-byte encoding from [block_RLBWT][blockRLBWT].
   I might have overlooked important details in the original implementation, though.
 
-Timing on calculating 10 million ranks:
+Timing on calculating 10 million ranks (data can be downloaded from [this Zenodo repo][zenodo]):
 
 |Dataset       |Format|Size    |Time    |
 |:-------------|:----:|-------:|-------:|
@@ -31,3 +31,4 @@ trie/DAWG traversal.
 [ropebwt2]: https://github.com/lh3/ropebwt2
 [blockRLBWT]: https://github.com/saskeli/block_RLBWT
 [rb3]: https://github.com/lh3/ropebwt3
+[zenodo]: https://zenodo.org/doi/10.5281/zenodo.11533210

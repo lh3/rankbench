@@ -30,7 +30,7 @@ b2b_t *rb3_enc_fmd2b2b(rld_t *e, int bbit, int is_free)
 
 int main(int argc, char *argv[])
 {
-	int32_t bbit = 12;
+	int32_t bbit = 13;
 	rld_t *e;
 	b2b_t *b;
 	if (argc < 3) {

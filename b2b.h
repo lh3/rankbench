@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define B2B_DEFAULT_BBIT 12
+#define B2B_DEFAULT_BBIT 13
 #define B2B_MAX_ASIZE    31
 
 typedef struct {
